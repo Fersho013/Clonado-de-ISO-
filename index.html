@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual Técnico: Clonado de Imágenes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+        
+        :root {
+            --dell: #0076CE;
+            --lenovo: #E2231A;
+            --asus: #00539B;
+            --hp: #0096D6;
+            --msi: #FF0000;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        .brand-dell { color: var(--dell); }
+        .brand-lenovo { color: var(--lenovo); }
+        .brand-asus { color: var(--asus); }
+        .brand-hp { color: var(--hp); }
+        .brand-msi { color: var(--msi); }
+
+        .terminal {
+            background-color: #1a1b26;
+            font-family: 'Fira Code', monospace;
+        }
+
+        .image-placeholder {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .sidebar-link.active {
+            border-left: 4px solid #3b82f6;
+            background-color: #eff6ff;
+            color: #1e40af;
+        }
+    </style>
+</head>
+<body class="bg-slate-50">
+
+    <div class="flex min-h-screen">
+        <!-- Sidebar Navigation -->
+        <aside class="w-72 bg-white border-r border-slate-200 hidden lg:block sticky top-0 h-screen overflow-y-auto">
+            <div class="p-6 border-b border-slate-100">
+                <h2 class="text-xl font-extrabold tracking-tight text-slate-900">GUÍA TÉCNICA</h2>
+                <p class="text-xs text-slate-500 font-bold uppercase mt-1">Clonado de Imágenes</p>
+            </div>
+            <nav class="p-4 space-y-1">
+                <a href="#requisitos" class="sidebar-link block p-3 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-50 transition-colors">Requisitos y Materiales</a>
+                <a href="#boot-menu" class="sidebar-link block p-3 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-50 transition-colors">Boot Menu por Marca</a>
+                <a href="#inicio" class="sidebar-link block p-3 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-50 transition-colors">Inicio del Proceso</a>
+                <a href="#ahci" class="sidebar-link block p-3 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-50 transition-colors">Solución Modo AHCI</a>
+                <a href="#master" class="sidebar-link block p-3 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-50 transition-colors">Creación Imagen Máster</a>
+                <a href="#restauracion" class="sidebar-link block p-3 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-50 transition-colors">Restauración y Ajustes</a>
+                <a href="#produccion" class="sidebar-link block p-3 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-50 transition-colors">Notas de Producción</a>
+                <a href="#validacion" class="sidebar-link block p-3 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-50 transition-colors">Validación WinRE</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 max-w-5xl">
+            <header class="bg-white border-b border-slate-200 p-8">
+                <div class="max-w-3xl">
+                    <h1 class="text-4xl font-extrabold text-slate-900 mb-4 tracking-tight uppercase">GUÍA DE CLONADO DE IMÁGENES </h1>
+                    <div class="h-1 w-20 bg-blue-600 rounded"></div>
+                </div>
+            </header>
+
+            <div class="p-8 space-y-16 pb-24">
+                
+                <!-- SECCIÓN 1: PORTADA Y REQUISITOS -->
+                <section id="requisitos">
+                    <div class="flex items-center gap-2 text-blue-600 font-bold text-sm mb-2 uppercase tracking-wider">
+                        <i class="fas fa-tools"></i> [ SECCIÓN 1: PORTADA Y REQUISITOS ]
+                    </div>
+                    <h2 class="text-3xl font-bold text-slate-900 mb-8">Materiales</h2>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                            <ul class="space-y-4">
+                                <li class="flex items-start gap-3">
+                                    <span class="w-6 h-6 rounded-full bg-slate-900 text-white flex items-center justify-center text-xs flex-shrink-0 mt-1">1</span>
+                                    <span>Disco con conexión USB con hirens (preferible dentro de ventoy)</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="w-6 h-6 rounded-full bg-slate-900 text-white flex items-center justify-center text-xs flex-shrink-0 mt-1">2</span>
+                                    <span>Tener 1 Equipo al cual se le realizará ISO (sin ser custom)</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="w-6 h-6 rounded-full bg-slate-900 text-white flex items-center justify-center text-xs flex-shrink-0 mt-1">3</span>
+                                    <span>Disco de destino (Será el disco que reemplazará al de fabrica)</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="w-6 h-6 rounded-full bg-slate-900 text-white flex items-center justify-center text-xs flex-shrink-0 mt-1">4</span>
+                                    <span>Adaptador (es) de ssd m.2 (preferiblemente para mas velocidad de clonado en la ISO final)</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div id="boot-menu" class="bg-slate-900 p-6 rounded-xl text-slate-200 shadow-xl">
+                            <h3 class="text-lg font-bold mb-4 text-white uppercase tracking-wide border-b border-slate-700 pb-2">Boot menu de las laptops</h3>
+                            <div class="grid grid-cols-1 gap-3 font-mono">
+                                <div class="flex justify-between border-b border-slate-800 pb-1">
+                                    <span class="brand-dell uppercase font-bold">DELL</span>
+                                    <span>F12</span>
+                                </div>
+                                <div class="flex justify-between border-b border-slate-800 pb-1">
+                                    <span class="brand-lenovo uppercase font-bold">LENOVO</span>
+                                    <span>F12, (FN+F12)</span>
+                                </div>
+                                <div class="flex justify-between border-b border-slate-800 pb-1">
+                                    <span class="brand-asus uppercase font-bold">ASUS</span>
+                                    <span>F8</span>
+                                </div>
+                                <div class="flex justify-between border-b border-slate-800 pb-1">
+                                    <span class="brand-hp uppercase font-bold">HP</span>
+                                    <span>F9</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="brand-msi uppercase font-bold">MSI</span>
+                                    <span>F11</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="mt-8 italic text-slate-500 border-l-4 border-slate-200 pl-4">Una vez teniendo todo lo anterior mencionado se puede comenzar.</p>
+                </section>
+
+                <!-- SECCIÓN 2: INICIO DEL PROCESO -->
+                <section id="inicio" class="scroll-mt-20">
+                    <div class="flex items-center gap-2 text-blue-600 font-bold text-sm mb-2 uppercase tracking-wider">
+                        <i class="fas fa-play"></i> [ SECCIÓN 2: INICIO DEL PROCESO ]
+                    </div>
+                    <h2 class="text-3xl font-bold text-slate-900 mb-6">Proceso a realizar 1 vez para sacar el ISO</h2>
+                    <p class="text-lg leading-relaxed text-slate-700 mb-8">
+                        hay conectar el USB con hirens, iniciar el equipo y acceder al boot menu, la mayoria de equipos se bloqueara debido al secure boot, hay que seleccionar la key de Ventoy "Enroll This key" para poder acceder sin quitar el Secure boot, de ahí meterse directamente a Hirens boot, dentro de hirens hay que buscar Macrium.
+                    </p>
+
+                    <div class="image-placeholder w-full h-48 border-2 border-dashed border-slate-300 rounded-2xl flex flex-col items-center justify-center p-6 text-center shadow-inner">
+                        <i class="fas fa-image text-slate-400 text-3xl mb-3"></i>
+                        <p class="text-slate-600 font-bold">[INSERTE AQUÍ IMAGEN DE: Icono o acceso a Macrium Reflect dentro del escritorio de Hiren's Boot]</p>
+                    </div>
+                </section>
+
+                <!-- SECCIÓN 3: RESOLUCIÓN DE PROBLEMAS -->
+                <section id="ahci" class="scroll-mt-20">
+                    <div class="flex items-center gap-2 text-blue-600 font-bold text-sm mb-2 uppercase tracking-wider">
+                        <i class="fas fa-exclamation-triangle"></i> [ SECCIÓN 3: Errores puntuales ]
+                    </div>
+                    <h2 class="text-3xl font-bold text-slate-900 mb-6">Error de Detección de Disco en ensambles (Modo AHCI)</h2>
+                    <p class="text-lg text-slate-700 mb-8 italic">(Esto no ocurre en las laptop) Solamente aplica si se Clonan ISO de ensambles que presenten el error, si al iniciar Macrium Reflect no se visualiza el disco del ensamble, sigue estos pasos:</p>
+                    
+                    <div class="grid md:grid-cols-3 gap-6 mb-8">
+                        <div class="bg-red-50 border-t-4 border-red-500 p-6 rounded-lg">
+                            <h4 class="font-bold text-red-900 mb-2 uppercase text-xs">Problema</h4>
+                            <p class="text-red-800 text-sm">El controlador está en modo RAID o Intel VMD (común en procesadores nuevos).</p>
+                        </div>
+                        <div class="bg-green-50 border-t-4 border-green-500 p-6 rounded-lg">
+                            <h4 class="font-bold text-green-900 mb-2 uppercase text-xs">Solución</h4>
+                            <p class="text-green-800 text-sm">Entra a la BIOS y cambia el modo de almacenamiento a <strong>AHСІ</strong>.</p>
+                        </div>
+                        <div class="bg-blue-50 border-t-4 border-blue-500 p-6 rounded-lg">
+                            <h4 class="font-bold text-blue-900 mb-2 uppercase text-xs">Efecto</h4>
+                            <p class="text-blue-800 text-sm">Esto permitirá que el entorno de Hiren's reconozca discos NVMe de forma nativa sin necesidad de cargar drivers externos.</p>
+                        </div>
+                    </div>
+
+                    <div class="image-placeholder w-full h-48 border-2 border-dashed border-slate-300 rounded-2xl flex flex-col items-center justify-center p-6 text-center shadow-inner">
+                        <i class="fas fa-image text-slate-400 text-3xl mb-3"></i>
+                        <p class="text-slate-600 font-bold">[INSERTE AQUÍ IMAGEN DE: Opción de cambio de RAID/VMD a AHCI en la interfaz de una BIOS]</p>
+                    </div>
+                </section>
+
+                <!-- SECCIÓN 4: CREACIÓN DE LA IMAGEN MÁSTER -->
+                <section id="master" class="scroll-mt-20">
+                    <div class="flex items-center gap-2 text-blue-600 font-bold text-sm mb-2 uppercase tracking-wider">
+                        <i class="fas fa-save"></i> [ SECCIÓN 4: CREACIÓN DE LA IMAGEN MÁSTER ]
+                    </div>
+                    <h2 class="text-3xl font-bold text-slate-900 mb-6">Generación de la Imagen (.mrimg)</h2>
+                    <p class="text-lg text-slate-700 mb-10 leading-relaxed">
+                        dentro de macrium hay que buscar la opción "Backup" dentro de la opción backup, seleccionamos el...
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="image-placeholder h-40 border-2 border-dashed border-slate-300 rounded-xl flex flex-col items-center justify-center p-4 text-center">
+                            <p class="text-slate-600 text-xs font-bold">[INSERTE AQUÍ IMAGEN DE: Menú superior de Macrium Reflect con la pestaña "Backup" seleccionada]</p>
+                        </div>
+                        <div class="image-placeholder h-40 border-2 border-dashed border-slate-300 rounded-xl flex flex-col items-center justify-center p-4 text-center">
+                            <p class="text-slate-600 text-xs font-bold">[INSERTE AQUÍ IMAGEN DE: Opción "Image this disk" en la interfaz de Macrium]</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SECCIÓN 5: RESTAURACIÓN Y AJUSTE DE PARTICIONES -->
+                <section id="restauracion" class="scroll-mt-20">
+                    <div class="flex items-center gap-2 text-blue-600 font-bold text-sm mb-2 uppercase tracking-wider">
+                        <i class="fas fa-layer-group"></i> [ SECCIÓN 5: RESTAURACIÓN Y AJUSTE DE PARTICIONES ]
+                    </div>
+                    <h2 class="text-3xl font-bold text-slate-900 mb-8">Procedimiento de Restauración</h2>
+                    
+                    <div class="image-placeholder w-full h-56 border-2 border-dashed border-slate-300 rounded-2xl flex flex-col items-center justify-center p-6 text-center shadow-inner mb-12">
+                        <i class="fas fa-image text-slate-400 text-3xl mb-3"></i>
+                        <p class="text-slate-600 font-bold">[INSERTE AQUÍ IMAGEN DE: Interfaz de Macrium mostrando el disco KINGSTON SNV351000G de 931.51 GB y sus 4 particiones: 1-SYSTEM DRV, 2-(None), 3-Windows-SSD y 4-WINRE DRV]</p>
+                    </div>
+
+                    <div class="bg-red-600 text-white p-8 rounded-2xl shadow-xl relative overflow-hidden mb-12">
+                        <div class="absolute top-0 right-0 p-4 opacity-10">
+                            <i class="fas fa-radiation text-8xl"></i>
+                        </div>
+                        <div class="relative z-10">
+                            <h3 class="text-xl font-black mb-4 uppercase flex items-center gap-3">
+                                <i class="fas fa-hand-paper"></i> ADVERTENCIA CRÍTICA
+                            </h3>
+                            <p class="text-lg font-bold leading-tight">
+                                NO se debe utilizar el botón "Copy selected partitions" de forma directa si el disco de destino tiene una capacidad distinta al de origen, ya que esto podría dejar el espacio excedente al final del disco, desplazando la partición de recuperación (WinRE) y rompiendo el vínculo del sistema con las herramientas de reparación.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6">
+                        <h3 class="text-2xl font-bold text-slate-900 border-b-2 border-slate-100 pb-2">Pasos para el ajuste manual:</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-start gap-4 p-4 bg-white rounded-lg border border-slate-200">
+                                <span class="text-blue-600 font-black text-2xl">01</span>
+                                <p class="pt-1">Arrastre las primeras 3 particiones al disco de destino.</p>
+                            </div>
+                            <div class="flex items-start gap-4 p-4 bg-white rounded-lg border border-slate-200">
+                                <span class="text-blue-600 font-black text-2xl">02</span>
+                                <p class="pt-1">Antes de arrastrar la última partición (<strong>WINRE DRV</strong>), seleccione la partición <strong>3-Windows-SSD</strong>.</p>
+                            </div>
+                            <div class="flex items-start gap-4 p-4 bg-white rounded-lg border border-slate-200">
+                                <span class="text-blue-600 font-black text-2xl">03</span>
+                                <p class="pt-1">Haga clic en <strong>"Restored Partition Properties"</strong>.</p>
+                            </div>
+                            
+                            <div class="image-placeholder w-full h-32 border-2 border-dashed border-slate-300 rounded-xl flex flex-col items-center justify-center p-4 text-center my-6">
+                                <p class="text-slate-600 text-sm font-bold">[INSERTE AQUÍ IMAGEN DE: Botón "Restored Partition Properties" resaltado debajo del mapa de particiones]</p>
+                            </div>
+
+                            <div class="flex items-start gap-4 p-4 bg-white rounded-lg border border-slate-200">
+                                <span class="text-blue-600 font-black text-2xl">04</span>
+                                <p class="pt-1">En el apartado de <strong>"Free Space"</strong>, ajuste el valor manualmente para dejar exactamente el espacio que requiere la partición de recuperación (ej. 1.95 GB o 2000 MB según el origen).</p>
+                            </div>
+                            <div class="flex items-start gap-4 p-4 bg-white rounded-lg border border-slate-200">
+                                <span class="text-blue-600 font-black text-2xl">05</span>
+                                <p class="pt-1">Una vez ajustado, arrastre la partición 4-WINRE DRV al espacio final.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SECCIÓN 6: NOTAS DE PRODUCCIÓN -->
+                <section id="produccion" class="scroll-mt-20">
+                    <div class="flex items-center gap-2 text-blue-600 font-bold text-sm mb-2 uppercase tracking-wider">
+                        <i class="fas fa-clipboard-check"></i> [ SECCIÓN 6: NOTAS DE PRODUCCIÓN ]
+                    </div>
+                    <div class="bg-slate-50 border-2 border-slate-200 p-8 rounded-2xl">
+                        <p class="text-lg leading-relaxed text-slate-700 mb-8">
+                            Una vez aquí, hemos finalizado el clonado del ISO del fabricante dentro de un Disco de <strong>1TB</strong>, de aquí en adelante, hay que sacarle ISO a ese disco de 1TB con el sistema del fabricante, lo podemos propagar a los demás discos sin necesidad de hacer la expansión del espacio a cada disco, solamente copiando el ISO y dándole a Siguiente.
+                        </p>
+                        
+                        <div class="bg-blue-600 text-white p-6 rounded-xl shadow-lg border-l-8 border-blue-900">
+                            <p class="font-black text-sm uppercase tracking-widest mb-2">Nota de Producción</p>
+                            <p class="text-lg font-bold">
+                                Para los equipos restantes, NO es necesario repetir el ajuste de particiones. Al usar la Imagen Máster de 1TB sobre discos de 1TB, el volcado es directo (Full Disk Restore).
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SECCIÓN 7: VALIDACIÓN FINAL -->
+                <section id="validacion" class="scroll-mt-20">
+                    <div class="flex items-center gap-2 text-blue-600 font-bold text-sm mb-2 uppercase tracking-wider">
+                        <i class="fas fa-terminal"></i> [ SECCIÓN 7: VALIDACIÓN FINAL "Opcional" ]
+                    </div>
+                    <h2 class="text-3xl font-bold text-slate-900 mb-6">Validación del Entorno de Recuperación (WinRE)</h2>
+                    <p class="text-lg text-slate-700 mb-6">
+                        Una vez finalizado el primer clonado del lote, es recomendable validar que la partición de recuperación haya quedado configurada correctamente. Para ello, abra una consola de comandos (CMD) como administrador y ejecute:
+                    </p>
+
+                    <div class="terminal p-6 rounded-xl shadow-2xl mb-8 border border-slate-700">
+                        <div class="flex gap-2 mb-4">
+                            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-amber-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                        </div>
+                        <div class="text-slate-300">
+                            <span class="text-green-400">C:\Windows\System32></span> reagentc /info
+                        </div>
+                    </div>
+
+                    <p class="text-lg font-bold text-slate-800 mb-10 flex items-center gap-3">
+                        <i class="fas fa-check-circle text-green-500"></i> Verifique que el estado indique <span class="bg-green-100 text-green-800 px-3 py-1 rounded">"Enabled"</span>.
+                    </p>
+
+                    <div class="image-placeholder w-full h-48 border-2 border-dashed border-slate-300 rounded-2xl flex flex-col items-center justify-center p-6 text-center shadow-inner">
+                        <i class="fas fa-image text-slate-400 text-3xl mb-3"></i>
+                        <p class="text-slate-600 font-bold">[INSERTE AQUÍ IMAGEN DE: Captura de pantalla de la consola de Windows mostrando el comando 'reagentc /info' con el estado 'Enabled']</p>
+                    </div>
+                </section>
+
+            </div>
+
+            <footer class="bg-white border-t border-slate-200 p-8 text-center text-slate-500 text-sm">
+                <p>&copy; 2026 Manual Técnico de Sistemas | Departamento de IT</p>
+                <p class="mt-1 font-bold uppercase tracking-widest text-[10px]">Procedimiento Estándar de Clonado</p>
+            </footer>
+        </main>
+    </div>
+
+    <script>
+        // Smooth highlighting for sidebar
+        window.addEventListener('scroll', () => {
+            let current = "";
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.sidebar-link');
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= (sectionTop - 150)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
