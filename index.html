@@ -4,11 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manual Técnico: Clonado de Imágenes</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
+        /* Importación de tipografías desde Google Fonts: Inter para texto y Fira Code para consola */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Fira+Code:wght@400;500&display=swap');
         
+        /* Variables CSS para mantener los colores oficiales de cada marca de hardware */
         :root {
             --dell: #0076CE;
             --lenovo: #E2231A;
@@ -17,26 +22,31 @@
             --msi: #FF0000;
         }
 
+        /* Estilos base: fuente Inter y suavizado de scroll para la navegación interna */
         body {
             font-family: 'Inter', sans-serif;
             scroll-behavior: smooth;
         }
 
+        /* Clases para aplicar los colores de las variables superiores a los textos */
         .brand-dell { color: var(--dell); }
         .brand-lenovo { color: var(--lenovo); }
         .brand-asus { color: var(--asus); }
         .brand-hp { color: var(--hp); }
         .brand-msi { color: var(--msi); }
 
+        /* Estilo para el bloque negro que simula una terminal de comandos */
         .terminal {
             background-color: #1a1b26;
             font-family: 'Fira Code', monospace;
         }
 
+        /* Genera el fondo con puntos/patrón técnico usando una imagen SVG codificada */
         .image-placeholder {
             background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
         }
 
+        /* Estilo para resaltar visualmente en qué sección del menú lateral nos encontramos */
         .sidebar-link.active {
             border-left: 4px solid #3b82f6;
             background-color: #eff6ff;
@@ -47,7 +57,7 @@
 <body class="bg-slate-50">
 
     <div class="flex min-h-screen">
-        <!-- Sidebar Navigation -->
+        
         <aside class="w-72 bg-white border-r border-slate-200 hidden lg:block sticky top-0 h-screen overflow-y-auto">
             <div class="p-6 border-b border-slate-100">
                 <h2 class="text-xl font-extrabold tracking-tight text-slate-900">GUÍA TÉCNICA</h2>
@@ -57,15 +67,14 @@
                 <a href="#requisitos" class="sidebar-link block p-3 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-50 transition-colors">Requisitos y Materiales</a>
                 <a href="#boot-menu" class="sidebar-link block p-3 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-50 transition-colors">Boot Menu por Marca</a>
                 <a href="#inicio" class="sidebar-link block p-3 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-50 transition-colors">Inicio del Proceso</a>
-                <a href="#ahci" class="sidebar-link block p-3 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-50 transition-colors">Solución Modo AHCI</a>
+                <a href="#ahci" class="sidebar-link block p-3 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-50 transition-colors">(Opcional) Clonado Ensamble </a>
                 <a href="#master" class="sidebar-link block p-3 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-50 transition-colors">Creación Imagen Máster</a>
                 <a href="#restauracion" class="sidebar-link block p-3 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-50 transition-colors">Restauración y Ajustes</a>
                 <a href="#produccion" class="sidebar-link block p-3 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-50 transition-colors">Notas de Producción</a>
-                <a href="#validacion" class="sidebar-link block p-3 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-50 transition-colors">Validación WinRE </a>
+                <a href="#validacion" class="sidebar-link block p-3 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-50 transition-colors">(Opcional) Validación WinRE </a>
             </nav>
         </aside>
 
-        <!-- Main Content Area -->
         <main class="flex-1 max-w-5xl">
             <header class="bg-white border-b border-slate-200 p-8">
                 <div class="max-w-3xl">
@@ -76,7 +85,6 @@
 
             <div class="p-8 space-y-16 pb-24">
                 
-                <!-- SECCIÓN 1: PORTADA Y REQUISITOS -->
                 <section id="requisitos">
                     <div class="flex items-center gap-2 text-blue-600 font-bold text-sm mb-2 uppercase tracking-wider">
                         <i class="fas fa-tools"></i> [ SECCIÓN 1: PORTADA Y REQUISITOS ]
@@ -133,7 +141,6 @@
                     <p class="mt-8 italic text-slate-500 border-l-4 border-slate-200 pl-4">Una vez teniendo todo lo anterior mencionado se puede comenzar.</p>
                 </section>
 
-                <!-- SECCIÓN 2: INICIO DEL PROCESO -->
                 <section id="inicio" class="scroll-mt-20">
                     <div class="flex items-center gap-2 text-blue-600 font-bold text-sm mb-2 uppercase tracking-wider">
                         <i class="fas fa-play"></i> [ SECCIÓN 2: INICIO DEL PROCESO ]
@@ -149,7 +156,6 @@
                     </div>
                 </section>
 
-                <!-- SECCIÓN 3: RESOLUCIÓN DE PROBLEMAS -->
                 <section id="ahci" class="scroll-mt-20">
                     <div class="flex items-center gap-2 text-blue-600 font-bold text-sm mb-2 uppercase tracking-wider">
                         <i class="fas fa-exclamation-triangle"></i> [ SECCIÓN 3: Errores puntuales ]
@@ -178,7 +184,6 @@
                     </div>
                 </section>
 
-                <!-- SECCIÓN 4: CREACIÓN DE LA IMAGEN MÁSTER -->
                 <section id="master" class="scroll-mt-20">
                     <div class="flex items-center gap-2 text-blue-600 font-bold text-sm mb-2 uppercase tracking-wider">
                         <i class="fas fa-save"></i> [ SECCIÓN 4: CREACIÓN DE LA IMAGEN MÁSTER ]
@@ -198,7 +203,6 @@
                     </div>
                 </section>
 
-                <!-- SECCIÓN 5: RESTAURACIÓN Y AJUSTE DE PARTICIONES -->
                 <section id="restauracion" class="scroll-mt-20">
                     <div class="flex items-center gap-2 text-blue-600 font-bold text-sm mb-2 uppercase tracking-wider">
                         <i class="fas fa-layer-group"></i> [ SECCIÓN 5: RESTAURACIÓN Y AJUSTE DE PARTICIONES ]
@@ -256,7 +260,6 @@
                     </div>
                 </section>
 
-                <!-- SECCIÓN 6: NOTAS DE PRODUCCIÓN -->
                 <section id="produccion" class="scroll-mt-20">
                     <div class="flex items-center gap-2 text-blue-600 font-bold text-sm mb-2 uppercase tracking-wider">
                         <i class="fas fa-clipboard-check"></i> [ SECCIÓN 6: NOTAS DE PRODUCCIÓN ]
@@ -275,7 +278,6 @@
                     </div>
                 </section>
 
-                <!-- SECCIÓN 7: VALIDACIÓN FINAL -->
                 <section id="validacion" class="scroll-mt-20">
                     <div class="flex items-center gap-2 text-blue-600 font-bold text-sm mb-2 uppercase tracking-wider">
                         <i class="fas fa-terminal"></i> [ SECCIÓN 7: VALIDACIÓN FINAL "Opcional" ]
@@ -316,20 +318,23 @@
     </div>
 
     <script>
-        // Smooth highlighting for sidebar
+        // Esta función escucha el evento de desplazamiento (scroll) de la ventana
         window.addEventListener('scroll', () => {
             let current = "";
-            const sections = document.querySelectorAll('section');
-            const navLinks = document.querySelectorAll('.sidebar-link');
+            const sections = document.querySelectorAll('section'); // Busca todas las etiquetas <section>
+            const navLinks = document.querySelectorAll('.sidebar-link'); // Busca todos los enlaces del menú lateral
 
             sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
+                const sectionTop = section.offsetTop; // Posición de la sección respecto al tope de la página
+                const sectionHeight = section.clientHeight; // Altura total de la sección
+                
+                // Si el desplazamiento actual (pageYOffset) está sobre la sección (con un margen de 150px)
                 if (pageYOffset >= (sectionTop - 150)) {
-                    current = section.getAttribute('id');
+                    current = section.getAttribute('id'); // Guarda el ID de la sección actual
                 }
             });
 
+            // Recorre los enlaces y añade la clase 'active' solo al que coincida con la sección en pantalla
             navLinks.forEach(link => {
                 link.classList.remove('active');
                 if (link.getAttribute('href') === `#${current}`) {
