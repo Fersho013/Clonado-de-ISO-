@@ -4,16 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manual Técnico: Clonado de Imágenes</title>
-    
     <script src="https://cdn.tailwindcss.com"></script>
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <style>
-        /* Importación de tipografías desde Google Fonts: Inter para texto y Fira Code para consola */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Fira+Code:wght@400;500&display=swap');
         
-        /* Variables CSS para mantener los colores oficiales de cada marca de hardware */
         :root {
             --dell: #0076CE;
             --lenovo: #E2231A;
@@ -22,31 +17,26 @@
             --msi: #FF0000;
         }
 
-        /* Estilos base: fuente Inter y suavizado de scroll para la navegación interna */
         body {
             font-family: 'Inter', sans-serif;
             scroll-behavior: smooth;
         }
 
-        /* Clases para aplicar los colores de las variables superiores a los textos */
         .brand-dell { color: var(--dell); }
         .brand-lenovo { color: var(--lenovo); }
         .brand-asus { color: var(--asus); }
         .brand-hp { color: var(--hp); }
         .brand-msi { color: var(--msi); }
 
-        /* Estilo para el bloque negro que simula una terminal de comandos */
         .terminal {
             background-color: #1a1b26;
             font-family: 'Fira Code', monospace;
         }
 
-        /* Genera el fondo con puntos/patrón técnico usando una imagen SVG codificada */
         .image-placeholder {
             background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
         }
 
-        /* Estilo para resaltar visualmente en qué sección del menú lateral nos encontramos */
         .sidebar-link.active {
             border-left: 4px solid #3b82f6;
             background-color: #eff6ff;
@@ -57,7 +47,7 @@
 <body class="bg-slate-50">
 
     <div class="flex min-h-screen">
-        
+        <!-- Sidebar Navigation -->
         <aside class="w-72 bg-white border-r border-slate-200 hidden lg:block sticky top-0 h-screen overflow-y-auto">
             <div class="p-6 border-b border-slate-100">
                 <h2 class="text-xl font-extrabold tracking-tight text-slate-900">GUÍA TÉCNICA</h2>
@@ -67,14 +57,16 @@
                 <a href="#requisitos" class="sidebar-link block p-3 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-50 transition-colors">Requisitos y Materiales</a>
                 <a href="#boot-menu" class="sidebar-link block p-3 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-50 transition-colors">Boot Menu por Marca</a>
                 <a href="#inicio" class="sidebar-link block p-3 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-50 transition-colors">Inicio del Proceso</a>
-                <a href="#ahci" class="sidebar-link block p-3 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-50 transition-colors">(Opcional) Clonado Ensamble </a>
+                <a href="#ahci" class="sidebar-link block p-3 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-50 transition-colors">Solución Modo AHCI</a>
                 <a href="#master" class="sidebar-link block p-3 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-50 transition-colors">Creación Imagen Máster</a>
+                <a href="#iso" class="sidebar-link block p-3 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-50 transition-colors">Preparacion de ISO</a>
                 <a href="#restauracion" class="sidebar-link block p-3 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-50 transition-colors">Restauración y Ajustes</a>
                 <a href="#produccion" class="sidebar-link block p-3 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-50 transition-colors">Notas de Producción</a>
-                <a href="#validacion" class="sidebar-link block p-3 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-50 transition-colors">(Opcional) Validación WinRE </a>
+                <a href="#validacion" class="sidebar-link block p-3 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-50 transition-colors">Validación WinRE (Opcional)</a>
             </nav>
         </aside>
 
+        <!-- Main Content Area -->
         <main class="flex-1 max-w-5xl">
             <header class="bg-white border-b border-slate-200 p-8">
                 <div class="max-w-3xl">
@@ -85,6 +77,7 @@
 
             <div class="p-8 space-y-16 pb-24">
                 
+                <!-- SECCIÓN 1: PORTADA Y REQUISITOS -->
                 <section id="requisitos">
                     <div class="flex items-center gap-2 text-blue-600 font-bold text-sm mb-2 uppercase tracking-wider">
                         <i class="fas fa-tools"></i> [ SECCIÓN 1: PORTADA Y REQUISITOS ]
@@ -141,6 +134,7 @@
                     <p class="mt-8 italic text-slate-500 border-l-4 border-slate-200 pl-4">Una vez teniendo todo lo anterior mencionado se puede comenzar.</p>
                 </section>
 
+                <!-- SECCIÓN 2: INICIO DEL PROCESO -->
                 <section id="inicio" class="scroll-mt-20">
                     <div class="flex items-center gap-2 text-blue-600 font-bold text-sm mb-2 uppercase tracking-wider">
                         <i class="fas fa-play"></i> [ SECCIÓN 2: INICIO DEL PROCESO ]
@@ -156,6 +150,7 @@
                     </div>
                 </section>
 
+                <!-- SECCIÓN 3: RESOLUCIÓN DE PROBLEMAS -->
                 <section id="ahci" class="scroll-mt-20">
                     <div class="flex items-center gap-2 text-blue-600 font-bold text-sm mb-2 uppercase tracking-wider">
                         <i class="fas fa-exclamation-triangle"></i> [ SECCIÓN 3: Errores puntuales ]
@@ -184,37 +179,90 @@
                     </div>
                 </section>
 
+                <!-- SECCIÓN 4: CREACIÓN DE LA IMAGEN MÁSTER -->
                 <section id="master" class="scroll-mt-20">
                     <div class="flex items-center gap-2 text-blue-600 font-bold text-sm mb-2 uppercase tracking-wider">
                         <i class="fas fa-save"></i> [ SECCIÓN 4: CREACIÓN DE LA IMAGEN MÁSTER ]
                     </div>
-                    <h2 class="text-3xl font-bold text-slate-900 mb-6">Generación de la Imagen (.mrimg)</h2>
-                    <p class="text-lg text-slate-700 mb-10 leading-relaxed">
-                        dentro de macrium hay que buscar la opción "Backup" dentro de la opción backup, seleccionamos el...
+                    <h2 class="text-3xl font-bold text-slate-900 mb-6">Generación de la Imagen a propagar (.mrimg)</h2>
+                    <p class="text-lg text-slate-700 mb-8 leading-relaxed">
+                        dentro de macrium hay que buscar la opción "Backup" dentro de la opción backup, seleccionamos el disco que se desea clonar, en este caso el disco 1, y todas sus particiones de fábrica.
+
                     </p>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div class="image-placeholder h-40 border-2 border-dashed border-slate-300 rounded-xl flex flex-col items-center justify-center p-4 text-center">
-                            <p class="text-slate-600 text-xs font-bold">[INSERTE AQUÍ IMAGEN DE: Menú superior de Macrium Reflect con la pestaña "Backup" seleccionada]</p>
+                            <p class="text-slate-600 text-xs font-bold">[INSERTE AQUÍ IMAGEN DE: Menú superior de Macrium Reflect con la pestaña "Backup" e "image this disk" seleccionada]</p>
                         </div>
+
                         <div class="image-placeholder h-40 border-2 border-dashed border-slate-300 rounded-xl flex flex-col items-center justify-center p-4 text-center">
-                            <p class="text-slate-600 text-xs font-bold">[INSERTE AQUÍ IMAGEN DE: Opción "Image this disk" en la interfaz de Macrium]</p>
+                            <p class="text-slate-600 text-xs font-bold">[INSERTE AQUÍ IMAGEN DE: Opción "Carpeta del iso  guardar" en la interfaz de Macrium]</p>
                         </div>
                     </div>
+
+                    <p class="text-lg text-slate-700 mt-8 leading-relaxed">
+                        Hay que usar la opción “Image this disk…” dentro, solicitara donde alojar esa ISO, lo alojamos en las carpetas de “ISO CUSTOM” 
+La ISO se guardará con formato “.mrimg” hay que nombrar al archivo del ISO con el SKU del producto, en el ejemplo es el ISO del SKU: “542096”
+
+                    </p>
+
                 </section>
 
+                <!-- SECCIÓN 5: CREACIÓN DE LA IMAGEN MÁSTER -->
+                <section id="iso" class="scroll-mt-20">
+                    <div class="flex items-center gap-2 text-blue-600 font-bold text-sm mb-2 uppercase tracking-wider">
+                        <i class="fas fa-save"></i> [ SECCIÓN 5: PREPARACION DE ISO  ]
+                    </div>
+                    <h2 class="text-3xl font-bold text-slate-900 mb-6">Preparacion del entorno para clonar el ISO</h2>
+                    <p class="text-lg text-slate-700 mb-10 leading-relaxed">
+                        Una vez está guardada esta ISO, procedemos a clonarla en un disco de mayor capacidad.
+
+Primero, instalamos el disco de mayor capacidad dentro del equipo (de preferencia un adaptador de m.2 hacia USB C o USB 3.0 para mayor velocidad de clonado)
+Hay que ir a la opcion de “Restore”, dentro hay que usar la opcion “Browse for an image file…”
+
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="image-placeholder h-40 border-2 border-dashed border-slate-300 rounded-xl flex flex-col items-center justify-center p-4 text-center">
+                            <p class="text-slate-600 text-xs font-bold">[INSERTE AQUÍ IMAGEN DE: Menú superior de Macrium Reflect con la pestaña "Restore" y "Browse for an image file..." seleccionada]</p>
+                        </div>
+                        <div class="image-placeholder h-40 border-2 border-dashed border-slate-300 rounded-xl flex flex-col items-center justify-center p-4 text-center">
+                            <p class="text-slate-600 text-xs font-bold">[INSERTE AQUÍ IMAGEN DE: Opción "Select an image file" en la interfaz de Macrium]</p>
+                        </div>
+                    </div>
+
+                    <p class="text-lg text-slate-700 mt-7 leading-relaxed">
+                        Dentro, seleccionamos el ISO necesario para clonarlo, en este caso, el del ejemplo “ISO 542096-00-00.mrimg”. que es el que corresponde al ISO 542096
+
+                    </p>
+
+                </section>
+
+                <!-- SECCIÓN 5: RESTAURACIÓN Y AJUSTE DE PARTICIONES -->
                 <section id="restauracion" class="scroll-mt-20">
                     <div class="flex items-center gap-2 text-blue-600 font-bold text-sm mb-2 uppercase tracking-wider">
                         <i class="fas fa-layer-group"></i> [ SECCIÓN 5: RESTAURACIÓN Y AJUSTE DE PARTICIONES ]
                     </div>
                     <h2 class="text-3xl font-bold text-slate-900 mb-8">Procedimiento de Restauración</h2>
                     
-                    <div class="image-placeholder w-full h-56 border-2 border-dashed border-slate-300 rounded-2xl flex flex-col items-center justify-center p-6 text-center shadow-inner mb-12">
-                        <i class="fas fa-image text-slate-400 text-3xl mb-3"></i>
-                        <p class="text-slate-600 font-bold">[INSERTE AQUÍ IMAGEN DE: Interfaz de Macrium mostrando el disco KINGSTON SNV351000G de 931.51 GB y sus 4 particiones: 1-SYSTEM DRV, 2-(None), 3-Windows-SSD y 4-WINRE DRV]</p>
+                    <p class="text-lg text-slate-700 mb-7 leading-relaxed">
+                        Dentro verificamos que las particiones del ISO son correctas y seleccionamos “Restore Image” 
+
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="image-placeholder h-40 border-2 border-dashed border-slate-300 rounded-xl flex flex-col items-center justify-center p-4 text-center">
+                            <p class="text-slate-600 text-xs font-bold">[INSERTE AQUÍ IMAGEN DE: Menu de Macrium Reflect con la pestaña "Restore image"]</p>
+                        </div>
+                        <div class="image-placeholder h-40 border-2 border-dashed border-slate-300 rounded-xl flex flex-col items-center justify-center p-4 text-center">
+                            <p class="text-slate-600 text-xs font-bold">[INSERTE AQUÍ IMAGEN DE: Opción "Select a disk to restore" en la interfaz de Macrium]</p>
+                        </div>
                     </div>
 
-                    <div class="bg-red-600 text-white p-8 rounded-2xl shadow-xl relative overflow-hidden mb-12">
+                    <p class="text-lg text-slate-700 mt-7 leading-relaxed">
+                        Dentro de “Restore image” hay que seleccionar el disco vacío donde se busca clonar el ISO original del fabricante para hacerlo el ISO de 1 tb que se va a clonar masivamente.
+                    </p>
+
+                    <div class="bg-red-600 text-white p-8 rounded-2xl shadow-xl relative overflow-hidden mb-12 mt-10">
                         <div class="absolute top-0 right-0 p-4 opacity-10">
                             <i class="fas fa-radiation text-8xl"></i>
                         </div>
@@ -223,13 +271,14 @@
                                 <i class="fas fa-hand-paper"></i> ADVERTENCIA CRÍTICA
                             </h3>
                             <p class="text-lg font-bold leading-tight">
-                                NO se debe utilizar el botón "Copy selected partitions" de forma directa si el disco de destino tiene una capacidad distinta al de origen, ya que esto podría dejar el espacio excedente al final del disco, desplazando la partición de recuperación (WinRE) y rompiendo el vínculo del sistema con las herramientas de reparación.
+                                NO utilizar el botón 'Copy selected partitions' de forma directa si el disco de destino es más grande que el origen, ya que esto bloqueará el espacio sobrante como 'No asignado' y no se podrá expandir después fácilmente. Si se agrega todo de golpe quedará más de la mitad del espacio vacío sin posibilidad de ampliar ni usar ese espacio en blanco. 
                             </p>
                         </div>
                     </div>
+                   
 
                     <div class="space-y-6">
-                        <h3 class="text-2xl font-bold text-slate-900 border-b-2 border-slate-100 pb-2">Pasos para el ajuste manual:</h3>
+                        <h3 class="text-2xl font-bold text-slate-900 border-b-2 border-slate-100 pb-2">Pasos para el ajustarlo manual y evitar errores:</h3>
                         <div class="space-y-4">
                             <div class="flex items-start gap-4 p-4 bg-white rounded-lg border border-slate-200">
                                 <span class="text-blue-600 font-black text-2xl">01</span>
@@ -260,6 +309,7 @@
                     </div>
                 </section>
 
+                <!-- SECCIÓN 6: NOTAS DE PRODUCCIÓN -->
                 <section id="produccion" class="scroll-mt-20">
                     <div class="flex items-center gap-2 text-blue-600 font-bold text-sm mb-2 uppercase tracking-wider">
                         <i class="fas fa-clipboard-check"></i> [ SECCIÓN 6: NOTAS DE PRODUCCIÓN ]
@@ -278,6 +328,7 @@
                     </div>
                 </section>
 
+                <!-- SECCIÓN 7: VALIDACIÓN FINAL -->
                 <section id="validacion" class="scroll-mt-20">
                     <div class="flex items-center gap-2 text-blue-600 font-bold text-sm mb-2 uppercase tracking-wider">
                         <i class="fas fa-terminal"></i> [ SECCIÓN 7: VALIDACIÓN FINAL "Opcional" ]
@@ -318,23 +369,20 @@
     </div>
 
     <script>
-        // Esta función escucha el evento de desplazamiento (scroll) de la ventana
+        // Smooth highlighting for sidebar
         window.addEventListener('scroll', () => {
             let current = "";
-            const sections = document.querySelectorAll('section'); // Busca todas las etiquetas <section>
-            const navLinks = document.querySelectorAll('.sidebar-link'); // Busca todos los enlaces del menú lateral
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.sidebar-link');
 
             sections.forEach(section => {
-                const sectionTop = section.offsetTop; // Posición de la sección respecto al tope de la página
-                const sectionHeight = section.clientHeight; // Altura total de la sección
-                
-                // Si el desplazamiento actual (pageYOffset) está sobre la sección (con un margen de 150px)
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
                 if (pageYOffset >= (sectionTop - 150)) {
-                    current = section.getAttribute('id'); // Guarda el ID de la sección actual
+                    current = section.getAttribute('id');
                 }
             });
 
-            // Recorre los enlaces y añade la clase 'active' solo al que coincida con la sección en pantalla
             navLinks.forEach(link => {
                 link.classList.remove('active');
                 if (link.getAttribute('href') === `#${current}`) {
